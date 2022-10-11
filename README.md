@@ -1,5 +1,5 @@
 # АНАЛИЗ ДАННЫХ И ИСКУССТВЕННЫЙ ИНТЕЛЛЕКТ [in GameDev]
-Отчет по лабораторной работе #1 выполнил(а):
+Отчет по лабораторной работе #2 выполнил(а):
 - Юнусов Эмир Дамирович
 - РИ210943
 Отметка о выполнении заданий (заполняется студентом):
@@ -7,8 +7,8 @@
 | Задание | Выполнение | Баллы |
 | ------ | ------ | ------ |
 | Задание 1 | * | 60 |
-| Задание 2 | * | 20 |
-| Задание 3 | * | 20 |
+| Задание 2 | # | 20 |
+| Задание 3 | # | 20 |
 
 знак "*" - задание выполнено; знак "#" - задание не выполнено;
 
@@ -35,120 +35,109 @@
 - ✨Magic ✨
 
 ## Цель работы
-Ознакомиться с основными операторами зыка Python на примере реализации линейной регрессии.
+Познакомиться с программными средствами для организции передачи данных между инструментами google, Python и Unity
 
 ## Задание 1
-### Вывести "Hello World!" на Unity и Python.
-Python:
-![22](https://user-images.githubusercontent.com/114414329/192508581-476b6eb3-378d-4e66-b532-0add792bd8f5.png)
-![2](https://user-images.githubusercontent.com/114414329/192508602-28f8cd1c-b5da-433d-be77-c132c583b41f.png)
+### Реализовать совместную работу и передачу данных в связке Python - Google-Sheets – Unity.
 
-Unity:
-![3](https://user-images.githubusercontent.com/114414329/192510118-e88adacd-addd-4b6c-a5f0-55c13f7ab353.png)
-![33](https://user-images.githubusercontent.com/114414329/192510127-c7c45db7-02a8-43e9-a21f-702cbe4925e8.png)
+Подключение API для работы с Google Sheets и Google Drive.
+![аа1](https://user-images.githubusercontent.com/114414329/195166048-a1266f63-e1de-456e-a3fe-d76cfea991d6.png)
 
-
-## Задание 2
-### Пошагово выполнить каждый пункт раздела "ход работы" с описанием и примерами реализации задач.
-Должна ли величина loss стремиться к нулю при изменении исходных данных?
-- Произвести подготовку данных для работы с алгоритмом линейной регрессии. 10 видов данных были установлены случайным образом, и данные находились в линейной зависимости. Данные преобразуются в формат массива, чтобы их можно было вычислить напрямую при использовании умножения и сложения.
+Реализовация записи данных из скрипта на python в google-таблицу.
 
 ```py
 
+import gspread
 import numpy as np
-import matplotlib.pyplot as plt
-%matplotlib inline
-x = [3,21,22,34,54,34,55,67,89,99]
-x = np.array(x)
-y = [2,22,24,65,79,82,55,130,150,199]
-y = np.array(y)
-
-plt.scatter(x,y)
+gc = gspread.service_account(filename='unitydatascience-365116-136af73acabe.json')
+sh = gc.open("UnitySheets")
+price = np.random.randint(2000, 10000, 11)
+mon = list(range(1,11))
+i = 0
+while i <= len(mon):
+    i += 1
+    if i== 0:
+        continue
+    else:
+        tempInf = ((price[i-1]-price[i-2])/price[i-2])*100
+        tempInf = str(tempInf)
+        tempInf = tempInf.replace('.', ',')
+        sh.sheet1.update(('A' + str(i)), str(i))
+        sh.sheet1.update(('B' + str(i)), str(price[i-1]))
+        sh.sheet1.update(('C' + str(i)), str(tempInf))
+        print(tempInf)
 
 ```
-![image](https://user-images.githubusercontent.com/114414329/192511834-5d9edc21-84b6-4502-b58c-bfe2d86cb350.png)
+![аа4](https://user-images.githubusercontent.com/114414329/195166799-1a336a9b-ee43-4fcf-ae15-056f9be678e7.png)
 
-- Определить следующие связанные функции. Функция модели: определяет модель линейной регрессии wx+b. Функция потерь: функция потерь среднеквадратичной ошибки. Функция оптимизации: метод градиентного спуска для нахождения частных производных w и b.
-
+Написание функционала на Unity, в котором будет воспризводиться аудио-файл в зависимости от значения данных из таблицы.
 ```py
 
-def model(a, b, x):
-    return a*x + b
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Networking;
+using SimpleJSON;
 
-def loss_function(a, b, x, y):
-    num = len(x)
-    prediction = model(a,b,x)
-    return (0.5/num) * (np.square(prediction - y)).sum()
+public class NewBehaviourScript : MonoBehaviour
+{
+    public AudioClip goodSpeak;
+    public AudioClip normalSpeak;
+    public AudioClip badSpeak;
+    private AudioSource selectAudio;
+    private Dictionary<string,float> dataSet = new Dictionary<string, float>();
+    private bool statusStart = false;
+    private int i = 1;
 
-def optimize(a, b, x, y):
-    num = len(x)
-    prediction = model(a, b, x)
-    da = (1.0/num) * ((prediction - y) * x).sum()
-    db = (1.0/num) * ((prediction - y).sum())
-    a = a - Lr * da
-    b = b - Lr * db
-    return a, b
+    // Start is called before the first frame update
+    void Start()
+    {
+        StartCoroutine(GoogleSheets());
+    }
 
-def iterate(a, b, x, y, times):
-    for i in range(times):
-        a, b = optimize(a, b, x, y)
-    return a, b
+    // Update is called once per frame
+    void Update()
+    {
+        if (dataSet["Mon_" + i.ToString()] <= 10 & statusStart == false & i != dataSet.Count)
+        {
+            StartCoroutine(PlaySelectAudioGood());
+            Debug.Log(dataSet["Mon_" + i.ToString()]);
+        }
+
+        if (dataSet["Mon_" + i.ToString()] > 10 & dataSet["Mon_" + i.ToString()] < 100 & statusStart == false & i != dataSet.Count)
+        {
+            StartCoroutine(PlaySelectAudioNormal());
+            Debug.Log(dataSet["Mon_" + i.ToString()]);
+        }
+
+        if (dataSet["Mon_" + i.ToString()] >= 100 & statusStart == false & i != dataSet.Count)
+        {
+            StartCoroutine(PlaySelectAudioBad());
+            Debug.Log(dataSet["Mon_" + i.ToString()]);
+        }
+    }
+
+    IEnumerator GoogleSheets()
+    {
+        UnityWebRequest curentResp = UnityWebRequest.Get("https://sheets.googleapis.com/v4/spreadsheets/1tJI8GWYXUV2vFOgFWKrUEWLiv6cqMJVfBL5HTUi5dQY/values/Лист1?key=AIzaSyDlMi_9ukGm7qB5nvoodlSeTYTbkagnQfw");
+        yield return curentResp.SendWebRequest();
+        string rawResp = curentResp.downloadHandler.text;
+        var rawJson = JSON.Parse(rawResp);
+        foreach (var itemRawJson in rawJson["values"])
+        {
+            var parseJson = JSON.Parse(itemRawJson.ToString());
+            var selectRow = parseJson[0].AsStringList;
+            dataSet.Add(("Mon_" + selectRow[0]), float.Parse(selectRow[2]));
+        }
+    }
     
 
 ```
-![image](https://user-images.githubusercontent.com/114414329/192513510-54a757f7-61bb-4b83-b3fa-7a56eacb3873.png)
-
-- Начать итерацию.
-
-Инициализация и модель итеративной оптимизации:
-```py
-a = np.random.rand(1)
-print(a)
-b = np.random.rand(1)
-print(b)
-Lr = 0.000001
-
-a, b = iterate(a, b, x, y, 1)
-prediction = model (a, b, x)
-loss = loss_function(a, b, x, y)
-print(a, b, loss)
-plt.scatter(x, y)
-plt.plot(x, prediction)
-
-```
-![image](https://user-images.githubusercontent.com/114414329/192515255-19338a61-beda-40eb-a51d-886a0f18ade4.png)
-
-## Задание 3
-### Должна ли величина loss стремиться к нулю при изменении исходных данных? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ.
-Да, при увеличении итераций loss уменьшается:
-
-loss = 4283.071164163826 при 1 итерации
-
-![image](https://user-images.githubusercontent.com/114414329/192516907-29944ce1-c520-4c6d-adf2-11d44b5337b8.png)
-
-loss = 1837.1247976234213 при 50 итерациях
-
-![image](https://user-images.githubusercontent.com/114414329/192516729-e678d88b-068c-4ef7-9b24-9ce27b9a5858.png)
-
-loss = 191.84756654388002 при 10000 итерациях
-
-![image](https://user-images.githubusercontent.com/114414329/192517097-9f6d01cf-7149-482d-8fff-428afa7d7168.png)
-
-### Какова роль параметра Lr? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ. В качестве эксперимента можете изменить значение параметра.
-От параметра Lr прямо пропорционально зависит угол наклона графика.
-
-lr = 0.000001
-
-![image](https://user-images.githubusercontent.com/114414329/192518075-39121143-1116-4b7c-a3f5-3130344b7082.png)
-
-lr = 0.1
-
-![image](https://user-images.githubusercontent.com/114414329/192518240-658bdf01-72c2-4757-beb1-cf659773e714.png)
-
 
 ## Выводы
 
-Я ознакомиться с основными операторами языка Python на примере реализации линейной регрессии, определил связанные функции(функция модели, функция потерь, функция оптимизации) и выявил основные закономерности и зависимости, а так же написал программы по выводу строки "Hello World!" на Python и Unity.
+Я ознакомиться с программными средствами для организции передачи данных между инструментами google, Python и Unity
+
 
 | Plugin | README |
 | ------ | ------ |
