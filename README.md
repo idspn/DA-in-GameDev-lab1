@@ -1,5 +1,5 @@
 # АНАЛИЗ ДАННЫХ И ИСКУССТВЕННЫЙ ИНТЕЛЛЕКТ [in GameDev]
-Отчет по лабораторной работе #1 выполнил(а):
+Отчет по лабораторной работе #2 выполнил(а):
 - Юнусов Эмир Дамирович
 - РИ210943
 Отметка о выполнении заданий (заполняется студентом):
@@ -35,17 +35,121 @@
 - ✨Magic ✨
 
 ## Цель работы
-Ознакомиться с основными операторами зыка Python на примере реализации линейной регрессии.
+Познакомиться с программными средствами для создания системы машинного обучения и ее интеграции в Unity.
 
 ## Задание 1
-### Вывести "Hello World!" на Unity и Python.
-Python:
-![22](https://user-images.githubusercontent.com/114414329/192508581-476b6eb3-378d-4e66-b532-0add792bd8f5.png)
-![2](https://user-images.githubusercontent.com/114414329/192508602-28f8cd1c-b5da-433d-be77-c132c583b41f.png)
+### Реализовать систему машинного обучения в связке Python - Google-Sheets – Unity. При выполнении задания можно использовать видео-материалы и исходные данные, предоставленные преподавателями курса.
+Создал новый пустой 3D проект на Unity. Скачал папку с ML агентом. В созданный проект добавил ML Agent, выбрав Window - Package Manager - Add Package from disk. Последовательно добавьте .json – файлы: ml-agents-release_19 / com,unity.ml-agents / package.json, ml-agents-release_19 / com,unity.ml-agents.extensions / package.json. Далее запустил Anaconda Prompt для возможности запуска команд через консоль. Далее пишу серию команд для создания и активации нового ML-агента, а также для скачивания необходимых библиотек: mlagents 0.28.0; torch 1.7.1;
+Создаем на сцене плоскость, куб и сферу: 
 
-Unity:
-![3](https://user-images.githubusercontent.com/114414329/192510118-e88adacd-addd-4b6c-a5f0-55c13f7ab353.png)
-![33](https://user-images.githubusercontent.com/114414329/192510127-c7c45db7-02a8-43e9-a21f-702cbe4925e8.png)
+![image](https://user-images.githubusercontent.com/114414329/201128679-5f8d264f-fd07-43df-bcc0-bede582184b3.png)
+
+Создаем простой C# скрипт-файл и подключаем его к сфере:
+```py
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
+using Unity.MLAgents.Actuators;
+
+public class RollerAgent : Agent
+{
+    Rigidbody rBody;
+    // Start is called before the first frame update
+    void Start()
+    {
+        rBody = GetComponent<Rigidbody>();
+    }
+
+    public Transform Target;
+    public override void OnEpisodeBegin()
+    {
+        if (this.transform.localPosition.y < 0)
+        {
+            this.rBody.angularVelocity = Vector3.zero;
+            this.rBody.velocity = Vector3.zero;
+            this.transform.localPosition = new Vector3(0, 0.5f, 0);
+        }
+
+        Target.localPosition = new Vector3(Random.value * 8-4, 0.5f, Random.value * 8-4);
+    }
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        sensor.AddObservation(Target.localPosition);
+        sensor.AddObservation(this.transform.localPosition);
+        sensor.AddObservation(rBody.velocity.x);
+        sensor.AddObservation(rBody.velocity.z);
+    }
+    public float forceMultiplier = 10;
+    public override void OnActionReceived(ActionBuffers actionBuffers)
+    {
+        Vector3 controlSignal = Vector3.zero;
+        controlSignal.x = actionBuffers.ContinuousActions[0];
+        controlSignal.z = actionBuffers.ContinuousActions[1];
+        rBody.AddForce(controlSignal * forceMultiplier);
+
+        float distanceToTarget = Vector3.Distance(this.transform.localPosition, Target.localPosition);
+
+        if(distanceToTarget < 1.42f)
+        {
+            SetReward(1.0f);
+            EndEpisode();
+        }
+        else if (this.transform.localPosition.y < 0)
+        {
+            EndEpisode();
+        }
+    }
+}
+
+```
+
+Объекту «сфера» добавляем компоненты Rigidbody, Decision Requester, Behavior Parameters и настройте их так, как показано на рисунке ниже:
+
+![image](https://user-images.githubusercontent.com/114414329/201130288-4fa7770d-8441-4268-ad84-be0902e45dd0.png)
+
+В корень проекта добавляем файл конфигурации нейронной сети, доступный в папке с файлами проекта по ссылке:
+
+```py
+
+behaviors:
+  RollerBall:
+    trainer_type: ppo
+    hyperparameters:                 
+      batch_size: 10
+      buffer_size: 100
+      learning_rate: 3.0e-4
+      beta: 5.0e-4
+      epsilon: 0.2
+      lambd: 0.99
+      num_epoch: 3
+      learning_rate_schedule: linear
+    network_settings: 
+      normalize: false
+      hidden_units: 128
+      num_layers: 2
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+    max_steps: 500000
+    time_horizon: 64
+    summary_freq: 10000
+
+```
+Запускаем работу ml-агента:
+
+![image](https://user-images.githubusercontent.com/114414329/201131853-a32ecdee-64bf-41dd-8a04-2ba7ba54784a.png)
+
+Возвращаемся в проект Unity, запускаем сцену, проверяем работу ML-Agent’a. Сделаем 3, 9, 27 копий модели «Плоскость-Сфера-Куб», запускаем симуляцию сцены и наблюдаем за результатом обучения модели:
+
+![image](https://user-images.githubusercontent.com/114414329/201132301-13c4d822-6bbc-438e-8b0b-a0dbab25b0c2.png)
+
+![image](https://user-images.githubusercontent.com/114414329/201132422-89143650-35e0-44be-a90f-07823d89a1c0.png)
+
+После обучения шарик не падает с платформы и сам двигается к новому кубу.
 
 
 ## Задание 2
