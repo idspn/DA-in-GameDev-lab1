@@ -48,8 +48,9 @@
 ```py
 
 import gspread
+import gspread
 import numpy as np
-gc = gspread.service_account(filename='unitydatascience-365116-136af73acabe.json')
+gc = gspread.service_account(filename='unitydatasciense-370206-ad5f05a6944a.json')
 sh = gc.open("UnitySheets")
 price = np.random.randint(2000, 10000, 11)
 mon = list(range(1,11))
@@ -68,7 +69,8 @@ while i <= len(mon):
         print(tempInf)
 
 ```
-![аа4](https://user-images.githubusercontent.com/114414329/195166799-1a336a9b-ee43-4fcf-ae15-056f9be678e7.png)
+![image](https://user-images.githubusercontent.com/114414329/204729273-d76248e6-5b38-42cd-89c5-0126abd4031f.png)
+
 
 Написание функционала на Unity, в котором будет воспризводиться аудио-файл в зависимости от значения данных из таблицы.
 ```py
