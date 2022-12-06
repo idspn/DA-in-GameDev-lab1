@@ -35,115 +35,71 @@
 - ✨Magic ✨
 
 ## Цель работы
-Ознакомиться с основными операторами зыка Python на примере реализации линейной регрессии.
+Реализовать перцептрон,который умеет производить вычисления, и рассмотреть основные принципы его работы.
 
 ## Задание 1
-### Вывести "Hello World!" на Unity и Python.
-Python:
-![22](https://user-images.githubusercontent.com/114414329/192508581-476b6eb3-378d-4e66-b532-0add792bd8f5.png)
-![2](https://user-images.githubusercontent.com/114414329/192508602-28f8cd1c-b5da-433d-be77-c132c583b41f.png)
+### В проекте Unity реализовать перцептрон,который умеет производить вычисления
+Создвем пустой объект и присоединяем к нему файл Perceptron.cs
+![image](https://user-images.githubusercontent.com/114414329/205939500-d12991bc-7e31-4f9c-98ca-7e6260085ab4.png)
 
-Unity:
-![3](https://user-images.githubusercontent.com/114414329/192510118-e88adacd-addd-4b6c-a5f0-55c13f7ab353.png)
-![33](https://user-images.githubusercontent.com/114414329/192510127-c7c45db7-02a8-43e9-a21f-702cbe4925e8.png)
+Создаем логический элемент, который отрабатывает операцию OR:
+![image](https://user-images.githubusercontent.com/114414329/205945254-5c8d29a9-4831-4e09-8b03-cce54f15748b.png)
 
+1 эпоха:
+![image](https://user-images.githubusercontent.com/114414329/205943332-27072820-e1dc-44de-b09f-5113dc292ba5.png)
+
+2 эпохи:
+![image](https://user-images.githubusercontent.com/114414329/205943468-6f11eeba-9e78-4474-bce9-abee90c2bba6.png)
+
+4 эпохи:
+![image](https://user-images.githubusercontent.com/114414329/205944180-c2bda489-4c7c-4bde-b102-f96d4ed2781b.png)
+
+Уже во время 4 эпохи значение Total Error было 0.
+
+Создаем логический элемент, который отрабатывает операцию AND:
+![image](https://user-images.githubusercontent.com/114414329/205957943-d208cfdd-726d-45a2-a7f3-fc98b039c5c7.png)
+
+1 эпоха:
+![image](https://user-images.githubusercontent.com/114414329/205959599-d7f48efd-1a6c-4c53-9f2a-877209563c2c.png)
+
+4 эпохи:
+![image](https://user-images.githubusercontent.com/114414329/205959788-7233dc86-bd79-4926-8734-4da566987ed0.png)
+
+Уже во время 4 эпохи значение Total Error было 0.
+
+Создаем логический элемент, который отрабатывает операцию NAND:
+
+1 эпоха:
+![image](https://user-images.githubusercontent.com/114414329/205960207-d3aa523f-9eef-4a5c-9177-c810299d9962.png)
+
+4 эпохи:
+![image](https://user-images.githubusercontent.com/114414329/205960396-c0a72270-f1a4-4080-9343-c31bea331369.png)
+
+6 эпох:
+![image](https://user-images.githubusercontent.com/114414329/205960560-bfbf2441-f62f-4e3a-a3b8-179e87734c42.png)
+
+Уже во время 6 эпохи значение Total Error было 0.
+
+Создаем логический элемент, который отрабатывает операцию XOR:
+![image](https://user-images.githubusercontent.com/114414329/205960782-01421e2a-b5f1-439a-8d5e-8cea6b495bb3.png)
+
+1 эпоха:
+![image](https://user-images.githubusercontent.com/114414329/205961299-c689ac3b-2a40-4a08-828f-20bec4f66e42.png)
+
+4 эпохи:
+![image](https://user-images.githubusercontent.com/114414329/205961416-ea57738e-c11b-49fb-b82f-7d6f5dad5137.png)
+
+6 эпох:
+![image](https://user-images.githubusercontent.com/114414329/205961639-58019e6f-7495-480f-b5e7-0c59aa11287b.png)
+
+C третьей эпохи значение Total Error всегда  равно 4, делаем вывод, что перцептрон не может обучиться этой операции.
 
 ## Задание 2
-### Пошагово выполнить каждый пункт раздела "ход работы" с описанием и примерами реализации задач.
-Должна ли величина loss стремиться к нулю при изменении исходных данных?
-- Произвести подготовку данных для работы с алгоритмом линейной регрессии. 10 видов данных были установлены случайным образом, и данные находились в линейной зависимости. Данные преобразуются в формат массива, чтобы их можно было вычислить напрямую при использовании умножения и сложения.
+### Построить графики зависимости количества эпох от ошибки обучения. Указать от чего зависит необходимое количество эпох обучения.
 
-```py
-
-import numpy as np
-import matplotlib.pyplot as plt
-%matplotlib inline
-x = [3,21,22,34,54,34,55,67,89,99]
-x = np.array(x)
-y = [2,22,24,65,79,82,55,130,150,199]
-y = np.array(y)
-
-plt.scatter(x,y)
-
-```
-![image](https://user-images.githubusercontent.com/114414329/192511834-5d9edc21-84b6-4502-b58c-bfe2d86cb350.png)
-
-- Определить следующие связанные функции. Функция модели: определяет модель линейной регрессии wx+b. Функция потерь: функция потерь среднеквадратичной ошибки. Функция оптимизации: метод градиентного спуска для нахождения частных производных w и b.
-
-```py
-
-def model(a, b, x):
-    return a*x + b
-
-def loss_function(a, b, x, y):
-    num = len(x)
-    prediction = model(a,b,x)
-    return (0.5/num) * (np.square(prediction - y)).sum()
-
-def optimize(a, b, x, y):
-    num = len(x)
-    prediction = model(a, b, x)
-    da = (1.0/num) * ((prediction - y) * x).sum()
-    db = (1.0/num) * ((prediction - y).sum())
-    a = a - Lr * da
-    b = b - Lr * db
-    return a, b
-
-def iterate(a, b, x, y, times):
-    for i in range(times):
-        a, b = optimize(a, b, x, y)
-    return a, b
-    
-
-```
-![image](https://user-images.githubusercontent.com/114414329/192513510-54a757f7-61bb-4b83-b3fa-7a56eacb3873.png)
-
-- Начать итерацию.
-
-Инициализация и модель итеративной оптимизации:
-```py
-a = np.random.rand(1)
-print(a)
-b = np.random.rand(1)
-print(b)
-Lr = 0.000001
-
-a, b = iterate(a, b, x, y, 1)
-prediction = model (a, b, x)
-loss = loss_function(a, b, x, y)
-print(a, b, loss)
-plt.scatter(x, y)
-plt.plot(x, prediction)
-
-```
-![image](https://user-images.githubusercontent.com/114414329/192515255-19338a61-beda-40eb-a51d-886a0f18ade4.png)
 
 ## Задание 3
-### Должна ли величина loss стремиться к нулю при изменении исходных данных? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ.
-Да, при увеличении итераций loss уменьшается:
-
-loss = 4283.071164163826 при 1 итерации
-
-![image](https://user-images.githubusercontent.com/114414329/192516907-29944ce1-c520-4c6d-adf2-11d44b5337b8.png)
-
-loss = 1837.1247976234213 при 50 итерациях
-
-![image](https://user-images.githubusercontent.com/114414329/192516729-e678d88b-068c-4ef7-9b24-9ce27b9a5858.png)
-
-loss = 191.84756654388002 при 10000 итерациях
-
-![image](https://user-images.githubusercontent.com/114414329/192517097-9f6d01cf-7149-482d-8fff-428afa7d7168.png)
-
-### Какова роль параметра Lr? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ. В качестве эксперимента можете изменить значение параметра.
-От параметра Lr прямо пропорционально зависит угол наклона графика.
-
-lr = 0.000001
-
-![image](https://user-images.githubusercontent.com/114414329/192518075-39121143-1116-4b7c-a3f5-3130344b7082.png)
-
-lr = 0.1
-
-![image](https://user-images.githubusercontent.com/114414329/192518240-658bdf01-72c2-4757-beb1-cf659773e714.png)
+### Псотроить визуальную модель работы перцептронв на сцене Unity.
 
 
 ## Выводы
