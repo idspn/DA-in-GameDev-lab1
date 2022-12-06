@@ -43,6 +43,7 @@
 ![image](https://user-images.githubusercontent.com/114414329/205939500-d12991bc-7e31-4f9c-98ca-7e6260085ab4.png)
 
 Создаем логический элемент, который отрабатывает операцию OR:
+
 ![image](https://user-images.githubusercontent.com/114414329/205945254-5c8d29a9-4831-4e09-8b03-cce54f15748b.png)
 
 1 эпоха:
@@ -51,12 +52,16 @@
 2 эпохи:
 ![image](https://user-images.githubusercontent.com/114414329/205943468-6f11eeba-9e78-4474-bce9-abee90c2bba6.png)
 
-4 эпохи:
+4 эпохи(1 попытка):
 ![image](https://user-images.githubusercontent.com/114414329/205944180-c2bda489-4c7c-4bde-b102-f96d4ed2781b.png)
 
-Уже во время 4 эпохи значение Total Error было 0.
+4 эпохи(2 попытка):
+![image](https://user-images.githubusercontent.com/114414329/205963030-8c956c97-50c7-4f12-a98b-ca16763d8004.png)
+
+Во время 4 эпохи значение не всегдаTotal Error было 0.
 
 Создаем логический элемент, который отрабатывает операцию AND:
+
 ![image](https://user-images.githubusercontent.com/114414329/205957943-d208cfdd-726d-45a2-a7f3-fc98b039c5c7.png)
 
 1 эпоха:
@@ -68,6 +73,9 @@
 Уже во время 4 эпохи значение Total Error было 0.
 
 Создаем логический элемент, который отрабатывает операцию NAND:
+
+![image](https://user-images.githubusercontent.com/114414329/205962773-84dc354a-13b9-4282-87ca-3f3d0b4b8a36.png)
+
 
 1 эпоха:
 ![image](https://user-images.githubusercontent.com/114414329/205960207-d3aa523f-9eef-4a5c-9177-c810299d9962.png)
@@ -81,6 +89,7 @@
 Уже во время 6 эпохи значение Total Error было 0.
 
 Создаем логический элемент, который отрабатывает операцию XOR:
+
 ![image](https://user-images.githubusercontent.com/114414329/205960782-01421e2a-b5f1-439a-8d5e-8cea6b495bb3.png)
 
 1 эпоха:
