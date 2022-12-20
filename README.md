@@ -62,31 +62,40 @@ TensorBoard
 ![image](https://user-images.githubusercontent.com/114414329/208699421-6456dadc-6897-45f7-94a2-9d1b854be9a5.png)
 ![image](https://user-images.githubusercontent.com/114414329/208699488-273ad253-4407-4fc9-8843-437524604d58.png)
 
+Поменял num_epoch на 5:
+
+![image](https://user-images.githubusercontent.com/114414329/208714685-36b88bb4-31ad-49a5-b18d-10f943c3fced.png)
+![image](https://user-images.githubusercontent.com/114414329/208714712-e239400f-86ac-41b1-823e-4dd52a834bc3.png)
+
+
 Поменял lambd на 0.8:
 
 ![image](https://user-images.githubusercontent.com/114414329/208703763-62d8c86b-0ac8-4803-9362-036d6e35a48f.png)
 ![image](https://user-images.githubusercontent.com/114414329/208703792-7c00824f-e76d-487c-9577-b129f3cc3462.png)
 
-
-
-
-
-
-
-
 ## Задание 2
 ### Опишите результаты, выведенные в TensorBoard. 
 
 Environment:
+
 Cumulative Rewards - это общее вознаграждение по всем агентам, с течением времени должно постоянно увеличиваться.
+
 Episode Length - это средняя продолжительность обучния агентов.
+
 Losses:
+
 Policy Loss — это потеря политики со временем, при успешной тренировке значения должны уменьшаться.
+
 Value loss - это потеря функции со временем, показывает то, как успешно агент прогнозирует значение своего следующего состояния.
+
 Policy:
+
 Entropy - это значения случайности решений агента.
+
 Epsilon - это скорость изменения политики.
+
 Extrinsic Reward - это среднее вознаграждение, полученное за эпизод.
+
 Extrinsic Value Estimate - это среднее значение для всех положений агента, при успешной тренировке - увеличивается.
 
 ## Выводы
