@@ -52,10 +52,22 @@ TensorBoard
 
 ![image](https://user-images.githubusercontent.com/114414329/208698924-a85957b2-4e9e-412b-bffa-405ef43d1095.png)
 ![image](https://user-images.githubusercontent.com/114414329/208698980-8b7541f8-e18f-422a-80a2-84bd2e7a388e.png)
+![image](https://user-images.githubusercontent.com/114414329/208704494-8b13298d-11a2-4892-92d0-e92b33c60195.png)
+![image](https://user-images.githubusercontent.com/114414329/208704528-7228579c-1d3b-4a6f-a8b2-8c4233817eb0.png)
+![image](https://user-images.githubusercontent.com/114414329/208704562-a4983617-6077-4024-9c17-c6c5b66e218e.png)
+
 
 Поменял epsilon на 0.6:
+
 ![image](https://user-images.githubusercontent.com/114414329/208699421-6456dadc-6897-45f7-94a2-9d1b854be9a5.png)
 ![image](https://user-images.githubusercontent.com/114414329/208699488-273ad253-4407-4fc9-8843-437524604d58.png)
+
+Поменял lambd на 0.8:
+
+![image](https://user-images.githubusercontent.com/114414329/208703763-62d8c86b-0ac8-4803-9362-036d6e35a48f.png)
+![image](https://user-images.githubusercontent.com/114414329/208703792-7c00824f-e76d-487c-9577-b129f3cc3462.png)
+
+
 
 
 
