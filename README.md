@@ -47,12 +47,16 @@
 Переместил файл Economic.yaml в папку с проектом Unity, запустил Anaconda Prompt (от имени администратора), создал виртуальное пространство и установил нужные пакеты.
 Запустил обучение:
 
-![image](https://user-images.githubusercontent.com/114414329/207873672-039e26d1-42e2-4baf-a484-52f18e1cf10c.png)
-
 TensorBoard
 Начальные графики:
+
 ![image](https://user-images.githubusercontent.com/114414329/208698924-a85957b2-4e9e-412b-bffa-405ef43d1095.png)
 ![image](https://user-images.githubusercontent.com/114414329/208698980-8b7541f8-e18f-422a-80a2-84bd2e7a388e.png)
+
+Поменял epsilon на 0.6:
+![image](https://user-images.githubusercontent.com/114414329/208699421-6456dadc-6897-45f7-94a2-9d1b854be9a5.png)
+![image](https://user-images.githubusercontent.com/114414329/208699488-273ad253-4407-4fc9-8843-437524604d58.png)
+
 
 
 
