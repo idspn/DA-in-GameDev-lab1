@@ -51,16 +51,8 @@
 
 TensorBoard
 Начальные графики:
-
-![image](https://user-images.githubusercontent.com/114414329/208697401-1acb15d6-0ff1-4d68-ab40-b9c7e1dce9ff.png)
-
-![image](https://user-images.githubusercontent.com/114414329/208697430-7090c7b5-b325-4b94-87bf-9f84f6a4da62.png)
-
-![image](https://user-images.githubusercontent.com/114414329/208697460-7d849d08-df65-41f8-9c71-fae37f02a2aa.png)
-
-![image](https://user-images.githubusercontent.com/114414329/208697477-f3ddbfc5-289f-40a2-a069-ee3bdd54fd0d.png)
-
-![image](https://user-images.githubusercontent.com/114414329/208697500-4e7113cb-5ed9-4037-983f-56f5d56a4439.png)
+![image](https://user-images.githubusercontent.com/114414329/208698924-a85957b2-4e9e-412b-bffa-405ef43d1095.png)
+![image](https://user-images.githubusercontent.com/114414329/208698980-8b7541f8-e18f-422a-80a2-84bd2e7a388e.png)
 
 
 
