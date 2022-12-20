@@ -42,7 +42,7 @@
 
 Открыл проект и ознакомился с его работой:
 
-![image](https://user-images.githubusercontent.com/114414329/207859536-06c0b360-9edb-40ab-b658-16022fccb694.png)
+![image](https://user-images.githubusercontent.com/114414329/208715046-4b3c5af7-32f4-46c4-bf28-48603118320b.png)
 
 Переместил файл Economic.yaml в папку с проектом Unity, запустил Anaconda Prompt (от имени администратора), создал виртуальное пространство и установил нужные пакеты.
 Запустил обучение:
