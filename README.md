@@ -51,15 +51,17 @@
 
 TensorBoard
 Начальные графики:
+
 ![image](https://user-images.githubusercontent.com/114414329/208697401-1acb15d6-0ff1-4d68-ab40-b9c7e1dce9ff.png)
+
 ![image](https://user-images.githubusercontent.com/114414329/208697430-7090c7b5-b325-4b94-87bf-9f84f6a4da62.png)
+
 ![image](https://user-images.githubusercontent.com/114414329/208697460-7d849d08-df65-41f8-9c71-fae37f02a2aa.png)
+
 ![image](https://user-images.githubusercontent.com/114414329/208697477-f3ddbfc5-289f-40a2-a069-ee3bdd54fd0d.png)
+
 ![image](https://user-images.githubusercontent.com/114414329/208697500-4e7113cb-5ed9-4037-983f-56f5d56a4439.png)
 
-
-Поменяем epsilon с 0.2 на 0.6, num_epoch с 3 на 8, strength c 1 на 0.9:
-![image](https://user-images.githubusercontent.com/114414329/208697251-5f7c2bd0-3d6d-4cbb-a582-24c4b37ef808.png)
 
 
 
